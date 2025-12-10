@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Career Bridge</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-1: #e6f0ff;
+      --brand: #1e88e5;
+      --brand-2: #166fc5;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --glass: rgba(255,255,255,0.14);
+      --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: linear-gradient(180deg,var(--bg-1), #f0f6ff 40%);
+      color:#0f1724;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* NAVBAR */
+    .navbar{
+      max-width:1200px;
+      margin:16px auto;
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(6,24,76,0.08);
+      border: 1px solid rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+    }
+    .logo{
+      margin:0;
+      color:var(--brand);
+      font-weight:700;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo::before{
+      content:"";
+      width:42px;height:42px;border-radius:10px;
+      background:linear-gradient(135deg,var(--brand),var(--brand-2));
+      display:inline-block;
+      box-shadow: 0 6px 18px rgba(30,136,229,0.22);
+    }
+    .nav-menu{
+      list-style:none;
+      display:flex;
+      gap:18px;
+    }
+    .nav-menu a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:8px 12px;
+      border-radius:10px;
+      font-weight:600;
+      transition:0.2s;
+    }
+    .nav-menu a:hover{
+      color:#fff;
+      background: linear-gradient(90deg,var(--brand),var(--brand-2));
+      box-shadow: 0 8px 20px rgba(30,136,229,0.12);
+    }
+
+    /* HERO */
+    .hero{
+      max-width:1200px;
+      margin:28px auto;
+      display:grid;
+      grid-template-columns: 1fr 480px;
+      gap:28px;
+      padding:28px;
+      align-items:center;
+    }
+    .hero-card{
+      background: rgba(255,255,255,0.85);
+      padding:36px;
+      border-radius:18px;
+      box-shadow: 0 20px 60px rgba(12,24,48,0.06);
+      border:1px solid rgba(255,255,255,0.6);
+    }
+    .hero h1{
+      font-size:36px;
+      margin:0 0 12px 0;
+    }
+    .hero p.lead{
+      color:var(--muted);
+      font-size:16px;
+      margin:0 0 20px;
+    }
+
+    /* Second Page Section */
+    .info-section{
+      max-width:1200px;
+      margin:60px auto;
+      padding:40px 22px;
+      background: rgba(255,255,255,0.85);
+      border-radius:18px;
+      box-shadow:0 20px 60px rgba(12,24,48,0.06);
+      border:1px solid rgba(255,255,255,0.5);
+    }
+    .info-title{
+      text-align:center;
+      font-size:26px;
+      font-weight:700;
+      color:#062a4a;
+      margin-bottom:16px;
+    }
+    .info-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:26px;
+      align-items:center;
+    }
+    .info-card{
+      background:#fff;
+      padding:26px;
+      border-radius:14px;
+      box-shadow:0 14px 40px rgba(12,24,48,0.06);
+      border:1px solid rgba(235,242,255,0.7);
+    }
+    .info-card img{
+      width:100%;
+      border-radius:14px;
+      margin-bottom:14px;
+    }
+    .info-card p{
+      margin:6px 0;
+      font-size:15px;
+      color:#445;
+    }
+    .info-card a{
+      color:var(--brand);
+      font-weight:600;
+      text-decoration:none;
+    }
+
+    @media(max-width:760px){
+      .hero{ grid-template-columns:1fr; }
+      .info-grid{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <h2 class="logo">Career Bridge</h2>
+    <ul class="nav-menu">
+      <li><a href="login.html">Login</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="chatbox.html">AI Chatbot</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-card">
+      <h1>Connecting foreign students to careers in Korea</h1>
+      <p class="lead">We help international students find internships and full-time roles in Seoul — fast and tailored to your background.</p>
+    </div>
+
+    <div>
+      <img src="images/bridge.jpg" style="width:100%;border-radius:14px;">
+    </div>
+  </section>
+
+  <!-- EXTRA INFO SECTION (ADDED BELOW HERO) -->
+<section class="extra-info">
+  <div class="extra-card">
+    <img src="images/support.jpeg" alt="Support and guidance signage" class="extra-img">
+
+    <h2 class="extra-title">Need Guidance? We Are Here to Help!</h2>
+
+    <p class="extra-text">
+      Career Bridge provides full support for international students:
+      job searching, CV tips, application guidance, and personalized recommendations.
+    </p>
+
+    <div class="contact-box">
+      <p><strong>📌 Website:</strong> www.careerbridge.com</p>
+      <p><strong>📧 Email:</strong> support@careerbridge.com</p>
+      <p><strong>📞 Phone:</strong> +82-10-2322-3317</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .extra-info{
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .extra-card{
+    background: #fff;
+    padding: 32px;
+    border-radius: 18px;
+    box-shadow: 0 14px 40px rgba(12,24,48,0.06);
+    border: 1px solid rgba(230,240,255,0.8);
+    text-align: center;
+  }
+
+  .extra-img{
+    width: 100%;
+    max-width: 360px;
+    border-radius: 14px;
+    display: block;
+    margin: 0 auto 20px;
+  }
+
+  .extra-title{
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #0f294a;
+  }
+
+  .extra-text{
+    max-width: 600px;
+    margin: 14px auto;
+    color: #6b7280;
+    font-size: 15px;
+  }
+
+  .contact-box{
+    margin-top: 20px;
+    padding: 16px;
+    background: #f7fbff;
+    border-radius: 12px;
+    border: 1px solid #e3e9f7;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.5;
+  }
+</style>
+

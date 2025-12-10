@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Career Bridge — Job Finder</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand:#1e88e5;
+      --brand-dark:#166fc5;
+      --bg:#f4f6f9;
+      --card:#fff;
+      --muted:#6b7280;
+      --radius:12px;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: linear-gradient(180deg,var(--bg), #eef2f7 120px);
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* HEADER */
+    .navbar{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      padding:18px 28px;
+      background:var(--brand);
+      color:#fff;
+      box-shadow:0 4px 18px rgba(30,136,229,0.18);
+      position:sticky;
+      top:0;
+      z-index:40;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      font-weight:700;
+      font-size:18px;
+    }
+    .logo-circle{
+      width:44px;height:44px;border-radius:10px;
+      background:linear-gradient(135deg,#fff6,#fff2);
+      display:grid;place-items:center;color:var(--brand);
+      font-weight:800;font-size:18px;border:2px solid rgba(255,255,255,0.12)
+    }
+
+    .container{
+      max-width:1100px;margin:28px auto;padding:0 20px;
+    }
+
+    /* top controls */
+    .controls{
+      display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px;
+    }
+    .search {
+      flex:1 1 420px; display:flex; gap:8px; align-items:center;
+      background:var(--card); padding:10px;border-radius:12px; box-shadow:0 6px 18px rgba(15,23,42,0.04);
+      border:1px solid #e6eef8;
+    }
+    .search input{
+      border:0;outline:0;font-size:15px;padding:8px 6px;width:100%;
+    }
+    .select, .btn {
+      background:var(--card); padding:10px;border-radius:10px;border:1px solid #e6eef8;
+      display:inline-flex;align-items:center;gap:8px;font-size:14px;
+    }
+    .btn{
+      cursor:pointer;background:var(--brand);color:#fff;padding:10px 14px;border-radius:10px;border:none;font-weight:600;
+    }
+    .small{
+      font-size:13px;color:var(--muted);
+    }
+
+    /* job list */
+    .job-container{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap:18px;
+    }
+    .job-card{
+      background:var(--card);padding:18px;border-radius:12px;border:1px solid #eef3fa;
+      box-shadow:0 6px 18px rgba(12,24,48,0.04);transition:transform .18s,box-shadow .18s;
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .job-card:hover{ transform:translateY(-6px); box-shadow:0 18px 34px rgba(14,30,60,0.08); }
+
+    .job-top{ display:flex;gap:12px;align-items:center; }
+    .company-logo{
+      width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#eef,#fff);
+      display:grid;place-items:center;font-weight:700;color:var(--brand);font-size:18px;border:1px solid #eef6ff;
+    }
+    .job-title{ font-size:16px;font-weight:700;color:var(--brand);margin:0 }
+    .company{ font-size:13px;color:var(--muted) }
+    .meta{ display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted) }
+
+    .tags{ display:flex;gap:8px;flex-wrap:wrap;margin-top:6px }
+    .tag{ font-size:12px;padding:6px 8px;border-radius:999px;border:1px solid #eef3fb;background:#fbfdff;color:var(--brand); }
+
+    .job-footer{ margin-top:auto; display:flex;gap:10px;align-items:center; }
+    .apply-btn{ flex:1;padding:10px;border-radius:10px;border:none;background:var(--brand);color:#fff;font-weight:700;cursor:pointer }
+    .fav-btn{ background:transparent;border:1px solid #e6eef8;padding:10px;border-radius:10px; cursor:pointer; }
+
+    /* pagination */
+    .pagination{ display:flex;gap:8px;justify-content:center;margin:28px 0;align-items:center }
+    .page-btn{ padding:8px 12px;border-radius:8px;border:1px solid #e6eef8;background:#fff;cursor:pointer }
+    .page-btn.active{ background:var(--brand); color:#fff; border-color:var(--brand) }
+
+    /* empty */
+    .empty{ text-align:center;padding:40px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px dashed #e6eef8;color:var(--muted) }
+
+    /* responsive tweaks */
+    @media (max-width:600px){
+      .navbar{padding:14px}
+      .logo-circle{width:36px;height:36px}
+      .search{flex-basis:100%}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar" role="banner">
+    <div class="brand" aria-hidden="true">
+      <div class="logo-circle">CB</div>
+      <div>Career Bridge</div>
+    </div>
+
+    <nav style="margin-left:auto;display:flex;gap:12px;align-items:center">
+      <div class="small" aria-hidden="true">Find your next role</div>
+    </nav>
+  </header>
+
+  <main class="container" role="main">
+    <section style="margin-bottom:18px">
+      <h1 style="margin:0;font-size:28px">Find job</h1>
+      <p class="small" style="margin:6px 0 0">Refine your search, use filters, and find the job that matches you best.</p>
+    </section>
+
+    <!-- Controls -->
+    <div class="controls" role="region" aria-label="Controls">
+      <div class="search" role="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.35-4.35" stroke="#9aa4b2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#9aa4b2" stroke-width="1.6"/></svg>
+        <input id="q" type="search" placeholder="Жишээ: UI Designer, Backend, Data Scientist..." aria-label="Хайлтын үг"/>
+        <button id="clearSearch" class="small" title="Clear" style="border:none;background:transparent;cursor:pointer;color:var(--muted)">×</button>
+      </div>
+
+      <div class="select" aria-hidden="true">
+        <label for="location" class="small" style="margin-right:8px">location</label>
+        <select id="location" style="border:0;outline:0;font-size:14px">
+          <option value="">위치</option>
+          <option>Seoul</option>
+          <option>Ulaanbaatar</option>
+          <option>Remote</option>
+        </select>
+      </div>
+
+      <div class="select">
+        <label for="type" class="small" style="margin-right:8px">Working time</label>
+        <select id="type" style="border:0;outline:0;font-size:14px">
+          <option value="">근무 시간</option>
+          <option>Full-time</option>
+          <option>Part-time</option>
+          <option>Contract</option>
+          <option>Internship</option>
+        </select>
+      </div>
+
+      <button id="newJob" class="btn" title="Post a job">Post Job</button>
+    </div>
+
+    <!-- Jobs -->
+    <section id="jobsSection">
+      <div id="jobList" class="job-container" aria-live="polite"></div>
+
+      <div id="empty" class="empty" style="display:none">
+        Үр дүн олдсонгүй. Шүүлтэнд тохирох ажил байхгүй байна.
+      </div>
+
+      <div class="pagination" id="pagination" aria-label="Pagination"></div>
+    </section>
+  </main>
+
+  <script>
+    // Sample data: Normally you'd fetch from an API
+    // Sample data: Normally you'd fetch from an API
+const sampleJobs = [
+  { id:1, title:"프론트엔드 엔지니어 (React)", company:"블루웨이브", location:"Seoul", salary:"₩55M - ₩80M", type:"Full-time", posted:"2일 전", tags:["React","JavaScript"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:2, title:"백엔드 개발자 (Java/Spring)", company:"클라우드노바", location:"Seoul", salary:"₩60M - ₩90M", type:"Full-time", posted:"3일 전", tags:["Spring","Java"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:3, title:"데이터 분석가", company:"데이터포지", location:"Seoul", salary:"₩50M - ₩80M", type:"Full-time", posted:"1주 전", tags:["Python","SQL"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:4, title:"UI/UX 디자이너", company:"캔버스 스튜디오", location:"Seoul", salary:"₩40M - ₩65M", type:"Full-time", posted:"5일 전", tags:["Figma","UI"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:5, title:"DevOps 엔지니어", company:"인프라웍스", location:"Seoul", salary:"₩70M - ₩100M", type:"Full-time", posted:"1일 전", tags:["AWS","Kubernetes"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:6, title:"안드로이드 개발자", company:"앱민트", location:"Seoul", salary:"₩55M - ₩85M", type:"Full-time", posted:"2주 전", tags:["Kotlin","Android"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:7, title:"iOS 개발자", company:"모바일큐브", location:"Seoul", salary:"₩60M - ₩95M", type:"Full-time", posted:"3일 전", tags:["Swift","iOS"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:8, title:"AI 엔지니어", company:"브레인랩", location:"Seoul", salary:"₩70M - ₩120M", type:"Full-time", posted:"4일 전", tags:["Machine Learning","Python"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:9, title:"데이터 엔지니어", company:"테크브릿지", location:"Seoul", salary:"₩65M - ₩100M", type:"Full-time", posted:"1일 전", tags:["Hadoop","ETL"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:10, title:"프로덕트 매니저 (PM)", company:"넥스트리드", location:"Seoul", salary:"₩55M - ₩90M", type:"Full-time", posted:"6일 전", tags:["Planning","Agile"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:11, title:"QA 엔지니어", company:"테스트랩", location:"Seoul", salary:"₩45M - ₩70M", type:"Full-time", posted:"1주 전", tags:["QA","Automation"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:12, title:"IT 헬프데스크", company:"서포터스", location:"Seoul", salary:"₩35M - ₩50M", type:"Full-time", posted:"3일 전", tags:["Support","IT"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:13, title:"게임 클라이언트 개발자", company:"플레이존", location:"Seoul", salary:"₩60M - ₩95M", type:"Full-time", posted:"5일 전", tags:["Unity","C#"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:14, title:"게임 기획자", company:"드림게임즈", location:"Seoul", salary:"₩40M - ₩65M", type:"Full-time", posted:"1일 전", tags:["Game Design","Level Design"], url:"https://www.jobkorea.co.kr/" },
+
+  { id:15, title:"보안 엔지니어", company:"시큐어텍", location:"Seoul", salary:"₩70M - ₩110M", type:"Full-time", posted:"4일 전", tags:["Security","Network"], url:"https://www.jobkorea.co.kr/" }
+];
+
+
+    // state
+    let jobs = [...sampleJobs];
+    let filtered = [...jobs];
+    const perPage = 4;
+    let page = 1;
+
+    const jobListEl = document.getElementById('jobList');
+    const paginationEl = document.getElementById('pagination');
+    const emptyEl = document.getElementById('empty');
+
+    // Favorites (localStorage)
+    const favKey = 'cb_favorites_v1';
+    const favorites = new Set(JSON.parse(localStorage.getItem(favKey) || '[]'));
+
+    function saveFavorites(){
+      localStorage.setItem(favKey, JSON.stringify(Array.from(favorites)));
+    }
+
+    function render(){
+      // paginate
+      const start = (page-1)*perPage;
+      const pageItems = filtered.slice(start, start+perPage);
+
+      jobListEl.innerHTML = '';
+      if(pageItems.length === 0){
+        emptyEl.style.display = 'block';
+      } else {
+        emptyEl.style.display = 'none';
+      }
+
+      for(const j of pageItems){
+        const card = document.createElement('article');
+        card.className = 'job-card';
+        card.innerHTML = `
+          <div class="job-top">
+            <div class="company-logo" aria-hidden="true">${j.company.slice(0,2).toUpperCase()}</div>
+            <div style="flex:1">
+              <h3 class="job-title">${j.title}</h3>
+              <div class="company">${j.company} • <span class="small">${j.location}</span></div>
+              <div class="meta">${j.type} • ${j.salary} • ${j.posted}</div>
+              <div class="tags">${j.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+            </div>
+          </div>
+
+          <div class="job-footer">
+            <button class="apply-btn" data-url="${j.url}" aria-label="Apply ${j.title}">View / Apply</button>
+            <button class="fav-btn" data-id="${j.id}" aria-pressed="${favorites.has(j.id)}">${favorites.has(j.id) ? '★ Saved' : '☆ Save'}</button>
+          </div>
+        `;
+        jobListEl.appendChild(card);
+      }
+
+      renderPagination();
+      attachCardListeners();
+    }
+
+    function renderPagination(){
+      const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+      paginationEl.innerHTML = '';
+      for(let i=1;i<=totalPages;i++){
+        const b = document.createElement('button');
+        b.className = 'page-btn' + (i===page ? ' active' : '');
+        b.textContent = i;
+        b.addEventListener('click', ()=>{ page=i; render(); window.scrollTo({top:200,behavior:'smooth'}) });
+        paginationEl.appendChild(b);
+      }
+    }
+
+    function attachCardListeners(){
+      // Apply buttons
+      document.querySelectorAll('.apply-btn').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const url = e.currentTarget.dataset.url;
+          window.open(url, '_blank', 'noopener');
+        })
+      });
+      // Favorite buttons
+      document.querySelectorAll('.fav-btn').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const id = Number(e.currentTarget.dataset.id);
+          if(favorites.has(id)){
+            favorites.delete(id);
+          } else {
+            favorites.add(id);
+          }
+          saveFavorites();
+          render();
+        })
+      });
+    }
+
+    // Filtering function
+    function applyFilters(){
+      const q = (document.getElementById('q').value || '').trim().toLowerCase();
+      const loc = document.getElementById('location').value;
+      const type = document.getElementById('type').value;
+
+      filtered = jobs.filter(j=>{
+        if(q){
+          const hay = (j.title + ' ' + j.company + ' ' + j.tags.join(' ')).toLowerCase();
+          if(!hay.includes(q)) return false;
+        }
+        if(loc && j.location !== loc) return false;
+        if(type && j.type !== type) return false;
+        return true;
+      });
+
+      page = 1;
+      render();
+    }
+
+    // UI wiring
+    document.getElementById('q').addEventListener('input', (e)=>{ applyFilters() });
+    document.getElementById('location').addEventListener('change', applyFilters);
+    document.getElementById('type').addEventListener('change', applyFilters);
+    document.getElementById('clearSearch').addEventListener('click', ()=>{
+      document.getElementById('q').value = '';
+      applyFilters();
+    });
+
+    // Example: Add new job (demo)
+    document.getElementById('newJob').addEventListener('click', ()=>{
+      const newid = jobs.length + 1;
+      jobs.unshift({
+        id:newid,
+        title:`New Position #${newid}`,
+        company:`Startup ${newid}`,
+        location: Math.random()>0.5 ? 'Remote' : 'Seoul',
+        salary:'₩45M - ₩70M',
+        type:'Full-time',
+        posted:'Just now',
+        tags:['New','Hiring'],
+        url:'https://www.jobkorea.co.kr/'
+      });
+      applyFilters();
+      page = 1;
+    });
+
+    // init
+    applyFilters();
+  </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+/* HERO SECTION */
+.hero {
+    height: 100vh;
+    width: 100%;
+    background: url("images/bridge.jpg") no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    padding: 0 8%;
+    position: relative;
+    color: white;
+  }
+  
+  /* Background дээр харагдах текстийг илүү тод болгоно */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45); /* Dark overlay */
+  }
+  
+  .hero-text {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+  }
+  
+  .hero-text h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  .hero-text p {
+    margin: 15px 0 30px;
+    font-size: 20px;
+    opacity: 0.9;
+  }
+  
+  .btn {
+    padding: 12px 28px;
+    border-radius: 8px;
+  }
+  
+/* NAVBAR STYLE */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-menu li a {
+  text-decoration: none;
+  color: #000000;   /* ← БҮРЭН ХАР ӨНГӨ */
+  font-weight: 700; /* Нүдэнд илүү тод харагдана */
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+
+.nav-menu li a:hover {
+  color: #000000;
+}
+
+
+  
+ /* MENU */
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+}
+
+.nav-menu li a {
+  color: #000000;  /*  ← ШУУД ХАРАГДДАГ ХАР ТЕКСТ */
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+/* Hover Effect (хүсвэл өөрчлөөнө) */
+.nav-menu li a:hover {
+  color: #000000;
+  text-shadow: none;
+}
